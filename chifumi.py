@@ -163,5 +163,3 @@ class player:
     def markpoint(self):
         self.point += 1
         print(self.name + " have mark the point")
-
-play()
