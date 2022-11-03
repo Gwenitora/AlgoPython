@@ -19,7 +19,7 @@ def play():
     global chifumi
     global languages
 
-    system('cls')
+    cls()
     if question("Use the default key ?", ["Yes","No"]) == 0:
         players = [
             player(
@@ -54,7 +54,7 @@ def play():
         rebour = 5
         while time()-timer < 5:
             if not rebour == int(5 - (time()-timer)):
-                system('cls')
+                cls()
                 print("You can play")
                 print("Timer: " + str(rebour))
                 scoring(players, 2)
@@ -62,7 +62,7 @@ def play():
             for i in range(len(players)):
                 players[i].play()
         
-        system('cls')
+        cls()
         for i in range(len(players)):
             if players[i].round[-1] == -1:
                 print(str(players[i].name) + ": Miss to play")
@@ -81,7 +81,7 @@ def play():
             print("egality")
         scoring(players, 4)
         sleep(3)
-    system('cls')
+    cls()
     for i in range(len(players)):
         if players[i].point == Rounds:
             print(players[i].name + " Win")
@@ -90,11 +90,11 @@ def play():
     while not is_pressed("enter"):
         pass
     input()
-    system('cls')
+    cls()
             
 
 def question(title, name, pos=0, default=""):
-    system('cls')
+    cls()
     print(title)
 
     if isinstance(name, str):
@@ -119,7 +119,7 @@ def question(title, name, pos=0, default=""):
             
     else:
         while True:
-            system('cls')
+            cls()
             print(title)
             for i in range(len(name)):
                 if i == pos:
@@ -163,3 +163,8 @@ class player:
     def markpoint(self):
         self.point += 1
         print(self.name + " have mark the point")
+
+def cls(): system('cls')
+
+cls()
+play()
