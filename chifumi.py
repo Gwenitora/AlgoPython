@@ -1,8 +1,4 @@
-from math import *
-from random import *
-from keyboard import *
-from time import *
-from os import *
+from library import *
 
 languages = [
     "French",
@@ -23,15 +19,15 @@ def play():
     if question("Use the default key ?", ["Yes","No"]) == 0:
         players = [
             player(
-                question("Name of player " + str(i+1) + " ?", "input", 0, "Player " + str(i))
+                question("Name of player " + str(i+1) + " ?", "input", "Player " + str(i+1))
             )
             for i in range(2)
         ]
-        players[1].key = ["q","s","d"]
+        players[0].key = ["q","s","d"]
     else:
         players = [
             player(
-                question("Name of player " + str(i+1) + " ?", "input", 0, "Player " + str(i)),
+                question("Name of player " + str(i+1) + " ?", "input", "Player " + str(i+1)),
                 [
                     question("Press the key of " + chifumi[j][1] + " for the player " + str(i), "key")
                     for j in range(len(chifumi))
@@ -91,53 +87,6 @@ def play():
         pass
     input()
     cls()
-            
-
-def question(title, name, pos=0, default=""):
-    cls()
-    print(title)
-
-    if isinstance(name, str):
-        if "input" in name:
-            inp = input()
-            if inp.replace(" ","") == "":
-                inp = default
-            if "int" in name:
-                try:
-                    inp = int(inp)
-                except:
-                    inp = 2
-            while is_pressed("enter"):
-                pass
-            return inp
-
-        if "key" in name:
-            myKey = read_key()
-            while is_pressed(myKey):
-                pass
-            return myKey
-            
-    else:
-        while True:
-            cls()
-            print(title)
-            for i in range(len(name)):
-                if i == pos:
-                    print("▶  " + str(name[i]))
-                else:
-                    print("      " + str(name[i]))
-            
-            sleep(0.2)
-            myKey = read_key()
-            if myKey=="haut":
-                pos = max(0,min((pos - 1), len(name)-1))
-            if myKey=="bas":
-                pos = max(0,min((pos + 1), len(name)-1))
-            if myKey=="enter":
-                while is_pressed("enter"):
-                    pass
-                input()
-                return pos
 
 def scoring(players, lines):
     for i in range(8 - lines):
@@ -163,8 +112,6 @@ class player:
     def markpoint(self):
         self.point += 1
         print(self.name + " have mark the point")
-
-def cls(): system('cls')
 
 cls()
 play()
