@@ -128,4 +128,3 @@ class player:
         print(self.name + " have mark the point")
 
 cls()
-play()
