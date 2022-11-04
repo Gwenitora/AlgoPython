@@ -4,12 +4,13 @@ languages = [
     "French",
     "English",
     "Japan latin",
-    "Japan"
+    "Japan Hiragana",
+    "Japan Katakana"
 ]
 chifumi = [
-    ["Pierre", "Rock", "hi", "ひ"],
-    ["Feuille", "Paper", "fu", "ふ"],
-    ["Ciseaux", "Scissors", "mi", "み"]
+    ["Pierre", "Rock", "hi", "ひ", "ヒ"],
+    ["Feuille", "Paper", "fu", "ふ", "フ"],
+    ["Ciseaux", "Scissors", "mi", "み", "ミ"]
 ]
 
 def play():
@@ -20,6 +21,9 @@ def play():
 
     cls()
     if question("Use the default key ?", ["Yes","No"]) == 0:
+        question("The default key for player 1 is 'q' for " + chifumi[0][1] + ", 's' for " + chifumi[1][1] + " & 'd' for " + chifumi[2][1], "empty")
+        if nbrPlayer == 2:
+            question("The default key for player 2 is 'Left' for " + chifumi[0][1] + ", 'Down' for " + chifumi[1][1] + " & 'Right' for " + chifumi[2][1], "empty")
         players = [
             player(
                 question("Name of player " + str(i+1) + " ?", "input", "Player " + str(i+1))
@@ -101,7 +105,7 @@ def scoring(players, lines):
         print(players[i].name + "'s score: " + str(players[i].point))
 
 class player:
-    def __init__(self, name, key=["1","2","3"]):
+    def __init__(self, name, key=["gauche","bas","droite"]):
         self.name = name
         self.key = key
         self.point = 0

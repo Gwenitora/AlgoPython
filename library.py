@@ -26,9 +26,18 @@ def question(title, name, default="", pos=0):
             myKey = read_key()
             while is_pressed(myKey):
                 pass
+            if myKey == "enter": input()
             return myKey
+
+        if "empty" in name:
+            while not is_pressed("enter"):
+                pass
+            while is_pressed("enter"):
+                pass
+            input()
+            return
             
-    else:
+    elif isinstance(name, list):
         while True:
             cls()
             print(title)
