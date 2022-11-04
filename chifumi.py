@@ -3,17 +3,20 @@ from library import *
 languages = [
     "French",
     "English",
+    "Japan latin",
     "Japan"
 ]
 chifumi = [
-    ["Pierre", "Rock", "chi"],
-    ["Feuille", "Paper", "fu"],
-    ["Ciseaux", "Scissors", "mi"]
+    ["Pierre", "Rock", "hi", "ひ"],
+    ["Feuille", "Paper", "fu", "ふ"],
+    ["Ciseaux", "Scissors", "mi", "み"]
 ]
 
 def play():
     global chifumi
     global languages
+
+    nbrPlayer = 2 + (question("Do you want to play with a bot ?", ["Yes","No"]) - 1)
 
     cls()
     if question("Use the default key ?", ["Yes","No"]) == 0:
@@ -21,7 +24,7 @@ def play():
             player(
                 question("Name of player " + str(i+1) + " ?", "input", "Player " + str(i+1))
             )
-            for i in range(2)
+            for i in range(nbrPlayer)
         ]
         players[0].key = ["q","s","d"]
     else:
@@ -33,9 +36,9 @@ def play():
                     for j in range(len(chifumi))
                 ]
             )
-            for i in range(2)
+            for i in range(nbrPlayer)
         ]
-    Rounds = question("Numbers of rounds won to win (2 by default) :", "input int")
+    Rounds = question("Numbers of rounds won to win the game (2 by default) :", "input int")
     lang = question(
         "Choose the language of the result of a round", 
         [
@@ -43,6 +46,9 @@ def play():
             for i in range(len(languages))
         ]
     )
+    if nbrPlayer == 1:
+        players.append(player("BOT", "botkey"))
+
     while not(players[0].point==Rounds or players[1].point==Rounds):
         for i in range(len(players)):
             players[i].newround()
@@ -105,9 +111,13 @@ class player:
         self.round.append(-1)
 
     def play(self):
-        for i in range(len(self.key)):
-            if is_pressed(self.key[i]):
-                self.round[-1] = i
+        if self.key == "botkey":
+            if self.round[-1] == -1:
+                self.round[-1] = randint(0,2)
+        else:
+            for i in range(len(self.key)):
+                if is_pressed(self.key[i]):
+                    self.round[-1] = i
     
     def markpoint(self):
         self.point += 1
