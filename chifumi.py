@@ -1,12 +1,6 @@
 from library import *
 
-languages = [
-    "English",
-    "French",
-    "Japan latin",
-    "Japan Hiragana",
-    "Japan Katakana"
-]
+languages = ["English", "French", "Japan latin", "Japan Hiragana", "Japan Katakana"]
 chifumi = [
     ["Rock", "Pierre", "hi", "ひ", "ヒ"],
     ["Paper", "Feuille", "fu", "ふ", "フ"],
@@ -20,13 +14,13 @@ def play():
     gameplay(parameter())
 
 def parameter():
-    nbrPlayer = 2 + (question("Do you want to play with a bot ?", ["Yes","No"], "", 1) - 1)
+    nbrPlayer = 2 + (question("Do you want to play with a bot ?", ["Yes","No"], 1) - 1)
 
     cls()
     if question("Use the default key ?", ["Yes","No"]) == 0:
-        question("The default key for player 1 is 'q' for " + chifumi[0][1] + ", 's' for " + chifumi[1][1] + " & 'd' for " + chifumi[2][1], "empty")
+        question("The default key for player 1 is 'q' for " + chifumi[0][0] + ", 's' for " + chifumi[1][0] + " & 'd' for " + chifumi[2][0], "empty")
         if nbrPlayer == 2:
-            question("The default key for player 2 is 'Left' for " + chifumi[0][1] + ", 'Down' for " + chifumi[1][1] + " & 'Right' for " + chifumi[2][1], "empty")
+            question("The default key for player 2 is 'Left' for " + chifumi[0][0] + ", 'Down' for " + chifumi[1][0] + " & 'Right' for " + chifumi[2][0], "empty")
         players = [
             player(
                 question("Name of player " + str(i+1) + " ?", "input", "Player " + str(i+1))
@@ -96,6 +90,7 @@ def gameplay(parameters):
             print("egality")
         scoring(players, 4)
         sleep(3)
+    
     cls()
     for i in range(len(players)):
         if players[i].point == Rounds:

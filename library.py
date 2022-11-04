@@ -4,7 +4,7 @@ from keyboard import *
 from time import *
 from os import *
 
-def question(questi, answers, default="", pos=0):
+def question(questi, answers, default=""):
     cls()
     print(questi)
 
@@ -41,6 +41,11 @@ def question(questi, answers, default="", pos=0):
             return
             
     elif isinstance(answers, list):
+        try:
+            pos = int(default)
+        except:
+            pos = 0
+        
         while True:
             cls()
             print(questi)
