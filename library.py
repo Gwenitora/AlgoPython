@@ -5,7 +5,7 @@ from time import *
 from os import *
 
 def question(questi, answers, default=""):
-    cls()
+    if not "noClear" in answers: cls()
     print(questi)
 
     if isinstance(answers, str):

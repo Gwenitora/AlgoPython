@@ -10,8 +10,12 @@ chifumi = [
 def play():
     global chifumi
     global languages
-
-    gameplay(parameter())
+    playing = 1
+    while playing == 1:
+        parameters = parameter()
+        playing = 0
+        while playing == 0:
+            playing = gameplay(parameters)
 
 def parameter():
     nbrPlayer = 2 + (question("Do you want to play with a bot ?", ["Yes","No"], 1) - 1)
@@ -96,14 +100,15 @@ def gameplay(parameters):
         if players[i].point == Rounds:
             print(players[i].name + " Win")
     scoring(players, 1)
+    question("","empty noClear","")
 
-    while not is_pressed("enter"):
-        pass
-    input()
-    cls()
+    for i in range(len(players)):
+        players[i].point = 0
+
+    return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
 
 def scoring(players, lines):
-    for i in range(8 - lines):
+    for i in range(6 - lines):
         print("")
     for i in range(len(players)):
         print(players[i].name + "'s score: " + str(players[i].point))
