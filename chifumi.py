@@ -1,23 +1,26 @@
 from library import *
 
 languages = [
-    "French",
     "English",
+    "French",
     "Japan latin",
     "Japan Hiragana",
     "Japan Katakana"
 ]
 chifumi = [
-    ["Pierre", "Rock", "hi", "ひ", "ヒ"],
-    ["Feuille", "Paper", "fu", "ふ", "フ"],
-    ["Ciseaux", "Scissors", "mi", "み", "ミ"]
+    ["Rock", "Pierre", "hi", "ひ", "ヒ"],
+    ["Paper", "Feuille", "fu", "ふ", "フ"],
+    ["Scissors", "Ciseaux", "mi", "み", "ミ"]
 ]
 
 def play():
     global chifumi
     global languages
 
-    nbrPlayer = 2 + (question("Do you want to play with a bot ?", ["Yes","No"]) - 1)
+    gameplay(parameter())
+
+def parameter():
+    nbrPlayer = 2 + (question("Do you want to play with a bot ?", ["Yes","No"], "", 1) - 1)
 
     cls()
     if question("Use the default key ?", ["Yes","No"]) == 0:
@@ -42,7 +45,8 @@ def play():
             )
             for i in range(nbrPlayer)
         ]
-    Rounds = question("Numbers of rounds won to win the game (2 by default) :", "input int")
+
+    Rounds = question("Numbers of rounds won to win the game (2 by default) :", "input int", 2)
     lang = question(
         "Choose the language of the result of a round", 
         [
@@ -52,6 +56,11 @@ def play():
     )
     if nbrPlayer == 1:
         players.append(player("BOT", "botkey"))
+    
+    return [players, Rounds, lang]
+
+def gameplay(parameters):
+    players, Rounds, lang = parameters[0], parameters[1], parameters[2]
 
     while not(players[0].point==Rounds or players[1].point==Rounds):
         for i in range(len(players)):

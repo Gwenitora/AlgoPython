@@ -4,32 +4,35 @@ from keyboard import *
 from time import *
 from os import *
 
-def question(title, name, default="", pos=0):
+def question(question, answers, default="", pos=0):
     cls()
-    print(title)
+    print(question)
 
-    if isinstance(name, str):
-        if "input" in name:
+    if isinstance(answers, str):
+        if "input" in answers:
             inp = input()
             if inp.replace(" ","") == "":
                 inp = default
-            if "int" in name:
+            if "int" in answers:
                 try:
                     inp = int(inp)
                 except:
-                    inp = 2
+                    try:
+                        inp = int(default)
+                    except:
+                        inp = 0
             while is_pressed("enter"):
                 pass
             return inp
 
-        if "key" in name:
+        if "key" in answers:
             myKey = read_key()
             while is_pressed(myKey):
                 pass
             if myKey == "enter": input()
             return myKey
 
-        if "empty" in name:
+        if "empty" in answers:
             while not is_pressed("enter"):
                 pass
             while is_pressed("enter"):
@@ -37,22 +40,22 @@ def question(title, name, default="", pos=0):
             input()
             return
             
-    elif isinstance(name, list):
+    elif isinstance(answers, list):
         while True:
             cls()
-            print(title)
-            for i in range(len(name)):
+            print(question)
+            for i in range(len(answers)):
                 if i == pos:
-                    print("▶  " + str(name[i]))
+                    print("▶  " + str(answers[i]))
                 else:
-                    print("      " + str(name[i]))
+                    print("      " + str(answers[i]))
             
             sleep(0.2)
             myKey = read_key()
             if myKey=="haut":
-                pos = max(0,min((pos - 1), len(name)-1))
+                pos = max(0,min((pos - 1), len(answers)-1))
             if myKey=="bas":
-                pos = max(0,min((pos + 1), len(name)-1))
+                pos = max(0,min((pos + 1), len(answers)-1))
             if myKey=="enter":
                 while is_pressed("enter"):
                     pass
