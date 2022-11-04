@@ -4,9 +4,9 @@ from keyboard import *
 from time import *
 from os import *
 
-def question(question, answers, default="", pos=0):
+def question(questi, answers, default="", pos=0):
     cls()
-    print(question)
+    print(questi)
 
     if isinstance(answers, str):
         if "input" in answers:
@@ -29,7 +29,7 @@ def question(question, answers, default="", pos=0):
             myKey = read_key()
             while is_pressed(myKey):
                 pass
-            if myKey == "enter": input()
+            question(questi + "\nYou choice the key '" + myKey + "'\nType enter to continue", "empty")
             return myKey
 
         if "empty" in answers:
@@ -43,7 +43,7 @@ def question(question, answers, default="", pos=0):
     elif isinstance(answers, list):
         while True:
             cls()
-            print(question)
+            print(questi)
             for i in range(len(answers)):
                 if i == pos:
                     print("▶  " + str(answers[i]))

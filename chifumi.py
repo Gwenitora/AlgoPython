@@ -39,7 +39,7 @@ def parameter():
             player(
                 question("Name of player " + str(i+1) + " ?", "input", "Player " + str(i+1)),
                 [
-                    question("Press the key of " + chifumi[j][1] + " for the player " + str(i), "key")
+                    question("Press the key of " + chifumi[j][0] + " for the player " + str(i), "key")
                     for j in range(len(chifumi))
                 ]
             )
