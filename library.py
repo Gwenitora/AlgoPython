@@ -4,6 +4,7 @@ from keyboard import *
 from time import *
 from os import *
 
+
 def question(questi, answers, default=""):
     if not "noClear" in answers: cls()
     print(questi)
