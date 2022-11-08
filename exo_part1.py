@@ -109,11 +109,15 @@ cls()
 # DEBUT
 
 def game(char = "abcdefghijklmnopqrstuvwxyz"):
+    
+    # Choisir un charactère dans la palette de charactères
     char = choice(str(char)).lower()
-    inp = input("Enter a character: ").lower()
-    while char != inp:
+
+    # Tant que le joueur ne donne pas le bon charactère, mettre une erreur et recommencer
+    while char != input("Enter a character: ").lower():
         print("wrong character, try again\n")
-        inp = input("Enter a character: ").lower()
+
+    # Quand le joueur a mis le bon charactère, féliciter et finir
     print("You have find the good character, GG\n")
     return
 
