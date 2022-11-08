@@ -106,43 +106,64 @@ cls()
 
 # # FIN
 # # -------------------------------------------------------------------------------------------------
+# # DEBUT
+
+# def game(char = "abcdefghijklmnopqrstuvwxyz"):
+
+#     # Choisir un charactère dans la palette de charactères
+#     char = choice(str(char)).lower()
+
+#     # Initialisation du compteur de tour
+#     count = 0
+
+#     # Tant que le joueur ne donne pas le bon charactère, mettre une erreur, compter l'erreur et recommencer
+#     while char != input("Enter a character: ").lower():
+#         count += 1
+#         print("wrong character, try again\n")
+
+#     # Quand le joueur a mis le bon charactère, féliciter et finir
+#     print("You have find the good character in " + str(count) + " try, GG\n")
+#     return
+
+# game('f')
+
+# def gameRecursif(char = "abcdefghijklmnopqrstuvwxyz", count = 0):
+
+#     # Choisir un caractère dans la palette de caractères
+#     char = choice(str(char)).lower()
+
+#     # Si le caractère choisis est bon, féliciter et finir
+#     if char == input("Enter a character: ").lower():
+#         print("You have find the good character in " + str(count) + " try, GG\n")
+    
+#     # Sinon mettre une erreur et recommencer avec le même caractère, mais compte une fois en plus
+#     else:
+#         print("wrong character, try again\n")
+#         gameRecursif(char, count+1)
+#     return
+
+# gameRecursif('f')
+
+# # FIN
+# # -------------------------------------------------------------------------------------------------
 # DEBUT
 
-def game(char = "abcdefghijklmnopqrstuvwxyz"):
+def virg(str1, str2):
+    # Concatene les deux strings séparé d'une virgule
+    return str1 + ',' + str2
 
-    # Choisir un charactère dans la palette de charactères
-    char = choice(str(char)).lower()
+def indexs(tab, val):
+    # Créer un texte vide qui contienderas les index
+    possibl = '|'
+    # Parcoure la liste
+    for i in range(len(tab)):
+        # Si la valeur parcouru de la liste est égale à la valeur ajouter, alors, concatener l'index
+        if tab[i]==val:
+            possibl += ", " + str(i)
+    # Retourner les index en str, et en enlevant la virgule au début
+    return possibl.replace("|, ", '').replace('|', '')
 
-    # Initialisation du compteur de tour
-    count = 0
-
-    # Tant que le joueur ne donne pas le bon charactère, mettre une erreur, compter l'erreur et recommencer
-    while char != input("Enter a character: ").lower():
-        count += 1
-        print("wrong character, try again\n")
-
-    # Quand le joueur a mis le bon charactère, féliciter et finir
-    print("You have find the good character in " + str(count) + " try, GG\n")
-    return
-
-game('f')
-
-def gameRecursif(char = "abcdefghijklmnopqrstuvwxyz", count = 0):
-
-    # Choisir un caractère dans la palette de caractères
-    char = choice(str(char)).lower()
-
-    # Si le caractère choisis est bon, féliciter et finir
-    if char == input("Enter a character: ").lower():
-        print("You have find the good character in " + str(count) + " try, GG\n")
-    
-    # Sinon mettre une erreur et recommencer avec le même caractère, mais compte une fois en plus
-    else:
-        print("wrong character, try again\n")
-        gameRecursif(char, count+1)
-    return
-
-gameRecursif('f')
+print(indexs([0,1,1,1,0,1,1,0,1], 0))
 
 # FIN
 # -------------------------------------------------------------------------------------------------
