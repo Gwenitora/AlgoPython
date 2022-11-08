@@ -94,8 +94,8 @@ cls()
 # print("salaire net dans le public: " + str(netSalaire(salaire, True)))
 # print("salaire net dans le privé: " + str(netSalaire(salaire, False)))
 
-# FIN
-# -------------------------------------------------------------------------------------------------
+# # FIN
+# # -------------------------------------------------------------------------------------------------
 # DEBUT
 
 def div(x, y):
