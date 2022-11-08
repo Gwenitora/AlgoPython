@@ -96,13 +96,27 @@ cls()
 
 # # FIN
 # # -------------------------------------------------------------------------------------------------
+# # DEBUT
+
+# def div(x, y):
+#     try:
+#         return x/y
+#     except:
+#         return None
+
+# # FIN
+# # -------------------------------------------------------------------------------------------------
 # DEBUT
 
-def div(x, y):
-    try:
-        return x/y
-    except:
-        return None
+def game(char = choice("abcdefghijklmnopqrstuvwxyz")):
+    inp = input("Enter a character: ")
+    while char != inp:
+        print("wrong character, try again\n")
+        inp = input("Enter a character: ")
+    print("You have find the good character, GG\n")
+    return
+
+game("f")
 
 # FIN
 # -------------------------------------------------------------------------------------------------
