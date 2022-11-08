@@ -1,3 +1,6 @@
+from library import *
+cls()
+
 # # DEBUT
 
 # r = 12000
