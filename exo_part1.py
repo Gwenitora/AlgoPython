@@ -108,15 +108,16 @@ cls()
 # # -------------------------------------------------------------------------------------------------
 # DEBUT
 
-def game(char = choice("abcdefghijklmnopqrstuvwxyz")):
-    inp = input("Enter a character: ")
+def game(char = "abcdefghijklmnopqrstuvwxyz"):
+    char = choice(str(char)).lower()
+    inp = input("Enter a character: ").lower()
     while char != inp:
         print("wrong character, try again\n")
-        inp = input("Enter a character: ")
+        inp = input("Enter a character: ").lower()
     print("You have find the good character, GG\n")
     return
 
-game("f")
+game('f')
 
 # FIN
 # -------------------------------------------------------------------------------------------------
