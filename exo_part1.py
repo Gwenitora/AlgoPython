@@ -44,38 +44,38 @@ cls()
 # print("Qui vole un " + str(returnSixPlusX(3)) + ", vole un boeuf")
 
 # # FIN
-# -------------------------------------------------------------------------------------------------
-# DEBUT
+# # -------------------------------------------------------------------------------------------------
+# # DEBUT
 
-def add(x, y):
-    return x+y
-def sub(x, y):
-    return x-y
-def mult(x, y):
-    return x*y
-def div(x, y):
-    try:
-        return x/y
-    except:
-        return None
-def mod(x, y):
-    try:
-        return x%y
-    except:
-        return None
+# def add(x, y):
+#     return x+y
+# def sub(x, y):
+#     return x-y
+# def mult(x, y):
+#     return x*y
+# def div(x, y):
+#     try:
+#         return x/y
+#     except:
+#         return None
+# def mod(x, y):
+#     try:
+#         return x%y
+#     except:
+#         return None
 
-def calcSalaireBySeconde(salHour, daysOpen, hourByDay):
-    return (salHour * hourByDay * daysOpen) / (3600 * 24 * 365)
+# def calcSalaireBySeconde(salHour, daysOpen, hourByDay):
+#     return (salHour * hourByDay * daysOpen) / (3600 * 24 * 365)
 
-def netSalaire(brut, coeff):
-    # Calculer et assigner multiplicateur du coeff
-    multiplicateurCoeff = 1 - coeff / 100
-    # Retrouner le salaire net
-    return brut * multiplicateurCoeff
+# def netSalaire(brut, coeff):
+#     # Calculer et assigner multiplicateur du coeff
+#     multiplicateurCoeff = 1 - coeff / 100
+#     # Retrouner le salaire net
+#     return brut * multiplicateurCoeff
 
-print(calcSalaireBySeconde(12000,235,8))
+# print(calcSalaireBySeconde(12000,235,8))
 
-# FIN
+# # FIN
 # -------------------------------------------------------------------------------------------------
 # DEBUT
 
