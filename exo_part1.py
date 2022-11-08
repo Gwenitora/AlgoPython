@@ -69,7 +69,7 @@ def calcSalaireBySeconde(salHour,daysOpen,hourByDay):
 
 def netSalaire(brut,coeff):
     # Calculer et assigner multiplicateur du coeff
-    multiplicateurCoeff = 1 + coeff / 100
+    multiplicateurCoeff = 1 - coeff / 100
     # Retrouner le salaire net
     return brut * multiplicateurCoeff
 
