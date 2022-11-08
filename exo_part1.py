@@ -54,12 +54,12 @@ def div(x,y):
     try:
         return x/y
     except:
-        return False
+        return None
 def mod(x,y):
     try:
         return x%y
     except:
-        return False
+        return None
 
 def calcSalaireBySeconde(salHour,daysOpen,hourByDay):
     return (salHour * hourByDay * daysOpen) / (3600 * 24 * 365)
