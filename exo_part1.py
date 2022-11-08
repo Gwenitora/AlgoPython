@@ -65,8 +65,23 @@ def calcSalaireBySeconde(salHour,daysOpen,hourByDay):
     return (salHour * hourByDay * daysOpen) / (3600 * 24 * 365)
 
 def netSalaire(brut,coeff):
-    return brut * (1 + coeff / 100)
+    # Calculer et assigner multiplicateur du coeff
+    multiplicateurCoeff = 1 + coeff / 100
+    # Retrouner le salaire net
+    return brut * multiplicateurCoeff
 
 print(calcSalaireBySeconde(12000,235,8))
+
+# FIN
+# -------------------------------------------------------------------------------------------------
+# DEBUT
+
+
+
+# FIN
+# -------------------------------------------------------------------------------------------------
+# DEBUT
+
+
 
 # FIN
