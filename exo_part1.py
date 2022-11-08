@@ -125,6 +125,8 @@ def game(char = "abcdefghijklmnopqrstuvwxyz"):
     print("You have find the good character in " + str(count) + " try, GG\n")
     return
 
+game('f')
+
 def gameRecursif(char = "abcdefghijklmnopqrstuvwxyz", count = 0):
 
     # Choisir un caractère dans la palette de caractères
