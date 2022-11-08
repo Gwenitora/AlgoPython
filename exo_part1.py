@@ -47,27 +47,27 @@ cls()
 # -------------------------------------------------------------------------------------------------
 # DEBUT
 
-def add(x,y):
+def add(x, y):
     return x+y
-def sub(x,y):
+def sub(x, y):
     return x-y
-def mult(x,y):
+def mult(x, y):
     return x*y
-def div(x,y):
+def div(x, y):
     try:
         return x/y
     except:
         return None
-def mod(x,y):
+def mod(x, y):
     try:
         return x%y
     except:
         return None
 
-def calcSalaireBySeconde(salHour,daysOpen,hourByDay):
+def calcSalaireBySeconde(salHour, daysOpen, hourByDay):
     return (salHour * hourByDay * daysOpen) / (3600 * 24 * 365)
 
-def netSalaire(brut,coeff):
+def netSalaire(brut, coeff):
     # Calculer et assigner multiplicateur du coeff
     multiplicateurCoeff = 1 - coeff / 100
     # Retrouner le salaire net
