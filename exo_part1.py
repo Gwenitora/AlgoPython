@@ -77,22 +77,38 @@ cls()
 # print(calcSalaireBySeconde(12000,235,8))
 
 # # FIN
+# # -------------------------------------------------------------------------------------------------
+# # DEBUT
+
+# def withdrawFees(total, taxes):
+#     return total * (1 - taxes / 100)
+
+
+# def netSalaire(brut, public):
+#     if public:
+#         return withdrawFees(brut, 15)
+#     else:
+#         return withdrawFees(brut, 23)
+
+# salaire = 1000
+# print("salaire net dans le public: " + str(netSalaire(salaire, True)))
+# print("salaire net dans le privé: " + str(netSalaire(salaire, False)))
+
+# FIN
 # -------------------------------------------------------------------------------------------------
 # DEBUT
 
-def withdrawFees(total, taxes):
-    return total * (1 - taxes / 100)
+def div(x, y):
+    try:
+        return x/y
+    except:
+        return None
+
+# FIN
+# -------------------------------------------------------------------------------------------------
+# DEBUT
 
 
-def netSalaire(brut, public):
-    if public:
-        return withdrawFees(brut, 15)
-    else:
-        return withdrawFees(brut, 23)
-
-salaire = 1000
-print("salaire net dans le public: " + str(netSalaire(salaire, True)))
-print("salaire net dans le privé: " + str(netSalaire(salaire, False)))
 
 # FIN
 # -------------------------------------------------------------------------------------------------
