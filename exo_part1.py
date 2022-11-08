@@ -127,14 +127,14 @@ def game(char = "abcdefghijklmnopqrstuvwxyz"):
 
 def gameRecursif(char = "abcdefghijklmnopqrstuvwxyz", count = 0):
 
-    # Choisir un charactère dans la palette de charactères
+    # Choisir un caractère dans la palette de caractères
     char = choice(str(char)).lower()
 
-    # Si le charactère choisis est bon, féliciter et finir
+    # Si le caractère choisis est bon, féliciter et finir
     if char == input("Enter a character: ").lower():
         print("You have find the good character in " + str(count) + " try, GG\n")
     
-    # Sinon mettre une erreur et recommencer avec le même charactère, mais compte une fois en plus
+    # Sinon mettre une erreur et recommencer avec le même caractère, mais compte une fois en plus
     else:
         print("wrong character, try again\n")
         gameRecursif(char, count+1)
