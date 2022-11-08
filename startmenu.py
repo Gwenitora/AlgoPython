@@ -9,7 +9,7 @@ games = [
 def start():
     global games
 
-    question("Welcome on the games of Gwenitora and LoBot (G.Tech1B - group 1)", "empty")
+    question("Welcome on the games of Gwenitora (G.Tech1 - group B)", "empty")
     while True:
         game = question("Choose a game:", games)
         if games[game] == games[0]:
