@@ -1,6 +1,7 @@
 from library import *
 cls()
 
+# # -------------------------------------------------------------------------------------------------
 # # DEBUT
 
 # r = 12000
@@ -79,7 +80,19 @@ cls()
 # -------------------------------------------------------------------------------------------------
 # DEBUT
 
+def withdrawFees(total, taxes):
+    return total * (1 - taxes / 100)
 
+
+def netSalaire(brut, public):
+    if public:
+        return withdrawFees(brut, 15)
+    else:
+        return withdrawFees(brut, 23)
+
+salaire = 1000
+print("salaire net dans le public: " + str(netSalaire(salaire, True)))
+print("salaire net dans le privé: " + str(netSalaire(salaire, False)))
 
 # FIN
 # -------------------------------------------------------------------------------------------------
