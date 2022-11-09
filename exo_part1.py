@@ -148,11 +148,11 @@ cls()
 # # -------------------------------------------------------------------------------------------------
 # DEBUT
 
-def comma(str1, str2):
+def comma(str1:str, str2:str)->str:
     # Concatene les deux strings avec une virgule
     return str1 + ',' + str2
 
-def indexs(tab, val):
+def indexs(tab:list, val)->str:
     # Créer un texte vide qui contienderas les index
     possibl = '|'
     # Parcoure la liste
