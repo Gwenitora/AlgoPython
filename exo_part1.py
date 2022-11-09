@@ -169,7 +169,48 @@ cls()
 # # -------------------------------------------------------------------------------------------------
 # DEBUT
 
+# def fibonacci(len:int, x:int = 1)->list:
+#     fibo = [0, x]
+#     for i in range(len - 2):
+#         fibo.append(fibo[-1] + fibo[-2])
+#     return fibo
 
+# print(fibonacci(10))
+
+def displayTab(tab:list):
+    for i in tab:
+        print(i)
+    print('')
+
+def connwayBoardSystem(table:list, xY:list)->list:
+    for col in range(len(table)):
+        for row in range(len(table[col])):
+            if xY[0] == col and xY[1] == row:
+                return [
+                    #Recuperer la case juste au desous
+                    table[col][row - 1] if (row - 1 >= 0 ) else None,
+                    #Recuperer la case juste au dessus
+                    table[col][row + 1] if (row + 1 < len(table[col]) ) else None,
+                    #Recuperer la case juste a gauche
+                    table[col - 1][row] if (col - 1 >= 0 ) else None,
+                    #Recuperer la case juste a droite 
+                    table[col + 1][row] if (col + 1 < len(table) ) else None,
+                ]
+
+
+            # assertion = (col - 1 >= 0 )  ? " Vrai" : "Faux"
+            # toto = col - 1 if (col - 1 >= 0 ) else Null
+
+def connway(length:int)->list:
+    table = [[randint(0,1) for i in range(length)] for j in range(length)]
+    tableTwo = [[[] for i in range(length)] for j in range(length)]
+    displayTab(table)
+    for col in range(len(table)):
+        for row in range(len(table)):
+            tableTwo[col][row] = connwayBoardSystem(table, [col, row])
+    return tableTwo
+
+displayTab(connway(3))
 
 # FIN
 # -------------------------------------------------------------------------------------------------
