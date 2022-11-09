@@ -146,24 +146,30 @@ cls()
 
 # # FIN
 # # -------------------------------------------------------------------------------------------------
+# # DEBUT
+
+# def comma(str1:str, str2:str)->str:
+#     # Concatene les deux strings avec une virgule
+#     return str1 + ',' + str2
+
+# def indexs(tab:list, val)->str:
+#     # Créer un texte vide qui contienderas les index
+#     possibl = '|'
+#     # Parcoure la liste
+#     for i in range(len(tab)):
+#         # Si la valeur parcouru de la liste est égale à la valeur ajouter, alors, concatener l'index
+#         if tab[i]==val:
+#             possibl += ", " + str(i)
+#     # Retourner les index en str, et en enlevant la virgule au début
+#     return possibl.replace("|, ", '').replace('|', "Null")
+
+# print(indexs([0,1,1,1,0,1,1,0,1], 0))
+
+# # FIN
+# # -------------------------------------------------------------------------------------------------
 # DEBUT
 
-def comma(str1:str, str2:str)->str:
-    # Concatene les deux strings avec une virgule
-    return str1 + ',' + str2
 
-def indexs(tab:list, val)->str:
-    # Créer un texte vide qui contienderas les index
-    possibl = '|'
-    # Parcoure la liste
-    for i in range(len(tab)):
-        # Si la valeur parcouru de la liste est égale à la valeur ajouter, alors, concatener l'index
-        if tab[i]==val:
-            possibl += ", " + str(i)
-    # Retourner les index en str, et en enlevant la virgule au début
-    return possibl.replace("|, ", '').replace('|', "Null")
-
-print(indexs([0,1,1,1,0,1,1,0,1], 0))
 
 # FIN
 # -------------------------------------------------------------------------------------------------
