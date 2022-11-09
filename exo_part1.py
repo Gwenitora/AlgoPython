@@ -148,8 +148,8 @@ cls()
 # # -------------------------------------------------------------------------------------------------
 # DEBUT
 
-def virg(str1, str2):
-    # Concatene les deux strings séparé d'une virgule
+def comma(str1, str2):
+    # Concatene les deux strings avec une virgule
     return str1 + ',' + str2
 
 def indexs(tab, val):
@@ -161,7 +161,7 @@ def indexs(tab, val):
         if tab[i]==val:
             possibl += ", " + str(i)
     # Retourner les index en str, et en enlevant la virgule au début
-    return possibl.replace("|, ", '').replace('|', '')
+    return possibl.replace("|, ", '').replace('|', "Null")
 
 print(indexs([0,1,1,1,0,1,1,0,1], 0))
 
