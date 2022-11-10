@@ -207,10 +207,10 @@ def connway(length:int)->list:
     displayTab(table)
     for col in range(len(table)):
         for row in range(len(table)):
-            tableTwo[col][row] = connwayBoardSystem(table, [col, row])
+            tableTwo[col][row] = connwayBoardSystem(table, [col, row]).count(1)
     return tableTwo
 
-displayTab(connway(3))
+displayTab(connway(5))
 
 # FIN
 # -------------------------------------------------------------------------------------------------
