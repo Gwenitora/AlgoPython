@@ -179,38 +179,77 @@ cls()
 
 def displayTab(tab:list):
     for i in tab:
-        print(i)
+        text = ''
+        for j in i:
+            text += str(j).replace('0',"□  ").replace('1',"■  ")
+        print(text)
     print('')
 
 def connwayBoardSystem(table:list, xY:list)->list:
+    tableReturn = []
     for col in range(len(table)):
         for row in range(len(table[col])):
             if xY[0] == col and xY[1] == row:
-                return [
-                    #Recuperer la case juste au desous
-                    table[col][row - 1] if (row - 1 >= 0 ) else None,
-                    #Recuperer la case juste au dessus
-                    table[col][row + 1] if (row + 1 < len(table[col]) ) else None,
-                    #Recuperer la case juste a gauche
-                    table[col - 1][row] if (col - 1 >= 0 ) else None,
-                    #Recuperer la case juste a droite 
-                    table[col + 1][row] if (col + 1 < len(table) ) else None,
-                ]
+                for i in range(-1,2):
+                    for j in range(-1,2):
+                        if (i != 0 or j != 0) and col-i >= 0 and row-j >= 0:
+                            try:
+                                tableReturn.append(table[col - i][row - j])
+                            except:
+                                pass
+                return tableReturn
 
 
             # assertion = (col - 1 >= 0 )  ? " Vrai" : "Faux"
             # toto = col - 1 if (col - 1 >= 0 ) else Null
 
-def connway(length:int)->list:
-    table = [[randint(0,1) for i in range(length)] for j in range(length)]
-    tableTwo = [[[] for i in range(length)] for j in range(length)]
-    displayTab(table)
+def connwayNewFrame(table:list)->list:
+    tableTwo = [[0 for i in range(len(table))] for j in range(len(table))]
     for col in range(len(table)):
         for row in range(len(table)):
             tableTwo[col][row] = connwayBoardSystem(table, [col, row]).count(1)
-    return tableTwo
+    for col in range(len(table)):
+        for row in range(len(table)):
+            if tableTwo[col][row] == 3:
+                table[col][row] = 1
+            elif tableTwo[col][row] < 2 or tableTwo[col][row] > 3:
+                table[col][row] = 0
+    cls()
+    displayTab(table)
+    return table
 
-displayTab(connway(5))
+def connway(table:list, frames:int = 0, speed:float = 0)->None:
+    displayTab(table)
+    if frames <= 0:
+        while True:
+            sleep(speed)
+            table = connwayNewFrame(table)
+    else:
+        for i in range(frames):
+            sleep(speed)
+            table = connwayNewFrame(table)
+
+def connwayWithLength(length:int, frames:int = 0, speed:float = 0)->None:
+    connway([[randint(0,1) for i in range(length)] for j in range(length)], frames)
+
+# connway([
+#     [0,0,0],
+#     [1,1,1],
+#     [0,0,0]
+# ], 20, 0.2)
+# connway([
+#     [0,0,0,0,0,0,0,0,0],
+#     [0,0,0,0,0,0,0,0,0],
+#     [0,0,0,0,0,0,0,0,0],
+#     [0,0,0,0,0,0,0,0,0],
+#     [0,0,1,1,1,1,1,0,0],
+#     [0,0,0,0,0,0,0,0,0],
+#     [0,0,0,0,0,0,0,0,0],
+#     [0,0,0,0,0,0,0,0,0],
+#     [0,0,0,0,0,0,0,0,0]
+# ], 20, 0.2)
+
+connwayWithLength(30)
 
 # FIN
 # -------------------------------------------------------------------------------------------------
