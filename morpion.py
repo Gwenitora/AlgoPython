@@ -54,7 +54,9 @@ class Table:
     
     def modify(self, player):
         if self.bot and player == 2:
-            return self.dangerCase()
+            coord = self.dangerCase()
+            self.table[coord[0]][coord[1]] = player
+            return
         while True:
             myKey = read_key()
             for i in range(len(self.key)):
@@ -108,7 +110,7 @@ class Table:
                 for j in range(3):
                     if self.table[j][i] == 0:
                         return j,i
-        for i in range(3):
+        for i in range(2):
             if [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)].count(1) >= 2:
                 for j in range(3):
                     if self.table[j][(2 - j) * i - j * (i - 1)] == 0:
@@ -118,10 +120,3 @@ class Table:
         while not self.table[i][j] == 0:
             i,j = randint(0,2),randint(0,2)
         return i,j
-        
-        
-
-
-
-
-play()
