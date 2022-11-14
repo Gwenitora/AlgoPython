@@ -202,7 +202,7 @@ def connwayBoardSystem(table:list, xY:list)->list:
 
             # assertion = (col - 1 >= 0 )  ? " Vrai" : "Faux"
             # toto = col - 1 if (col - 1 >= 0 ) else Null
-
+ 
 def connwayNewFrame(table:list)->list:
     tableTwo = [[0 for i in range(len(table))] for j in range(len(table))]
     for col in range(len(table)):
