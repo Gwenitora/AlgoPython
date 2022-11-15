@@ -55,6 +55,8 @@ class Table:
                 ((0,300),(600,300)),
                 ((0,500),(600,500))
             ]
+        self.connection = -1
+        self.connections = [(100,200), (500,200), (100, 600), (500, 600)]
     
     def printTable(self, message = ''):
         if self.pygame:
@@ -80,6 +82,16 @@ class Table:
                     draw.line(self.ecran, (255, 0, 0), (x+20,y+20), (x+180,y+180), 15)
                 elif self.table[i][j] == 2:
                     draw.ellipse(self.ecran, (0, 0, 255), (x+20, y+20, 160, 160), 10)
+        
+        if self.connection == 7:
+            draw.line(self.ecran, (0, 255, 0), (self.connections[1][0] + 50, self.connections[1][1] - 50), (self.connections[2][0] - 50, self.connections[2][1] + 50), 20)
+        elif self.connection == 6:
+            draw.line(self.ecran, (0, 255, 0), (self.connections[0][0] - 50, self.connections[0][1] - 50), (self.connections[3][0] + 50, self.connections[3][1] + 50), 20)
+        elif self.connection >=3:
+            draw.line(self.ecran, (0, 255, 0), (self.connections[0][0] - 50, self.connections[0][1] + (self.connection - 3) * 200), (self.connections[1][0] + 50, self.connections[1][1] + (self.connection - 3) * 200), 10)
+        elif self.connection >=0:
+            draw.line(self.ecran, (0, 255, 0), (self.connections[0][0] + (self.connection) * 200, self.connections[0][1] - 50), (self.connections[-2][0] + (self.connection) * 200, self.connections[-2][1] + 50), 10)
+
         display.update()
 
     def printConsole(self, message = ''):
@@ -134,6 +146,7 @@ class Table:
                 pass
             else:
                 win[i] = self.table[i][0]
+                self.connection = i
         
         for i in range(3):
             if 1 in [self.table[j][i] for j in range(3)] and 2 in [self.table[j][i] for j in range(3)]:
@@ -142,6 +155,7 @@ class Table:
                 pass
             else:
                 win[i + 3] = self.table[0][i]
+                self.connection = i + 3
         
         for i in range(2):
             if 1 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
@@ -150,6 +164,7 @@ class Table:
                 pass
             else:
                 win[i + 6] = self.table[0][i * 2]
+                self.connection = i + 6
         
         if 1 in win:
             return 1
