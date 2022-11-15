@@ -4,7 +4,7 @@ import morpion
 
 games = [
     "Chifumi",
-    "Morpion",
+    "Morpion (with Logan)",
     "Quit"
 ]
 
