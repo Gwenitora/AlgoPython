@@ -21,21 +21,21 @@ def gameplay(parameters):
     Plateau = Table(bot, pygame)
     player = randint(1,2)
     playerStr = str(player).replace("1", "X").replace("2", "O")
-    table = Plateau.printTable("Turn to player: " + playerStr)
+    Plateau.printTable("Turn to player: " + playerStr)
     while True:
         # cls()
         Plateau.modify(player)
         player %= 2
         player += 1
         playerStr = str(player).replace("1", "X").replace("2", "O")
-        check = Plateau.check()
-        table = Plateau.printTable("Turn to player: " + playerStr)
+        check = Plateau.check(player)
+        Plateau.printTable("Turn to player: " + playerStr)
         if check == -1:
             Plateau.printTable("Equality")
             Plateau.quitPygame()
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
         elif check != 0:
-            Plateau.printTable("Player " + str(check) + " Win")
+            Plateau.printTable("Player " + str(check).replace("1", "X").replace("2", "O") + " Win")
             Plateau.quitPygame()
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
 
@@ -63,7 +63,7 @@ class Table:
             self.printConsole(message)
     
     def printPygame(self, message = ''):
-        self.ecran.fill((150,150,150))
+        self.ecran.fill((240,240,240))
         draw.rect(self.ecran, (0,0,0), ((0, 0), (600, 100)))
         text = font.Font('freesansbold.ttf', 50).render(message, True, (255, 255, 255))
         textRect = text.get_rect()
@@ -115,7 +115,17 @@ class Table:
                             self.table[i][j] = player
                             return
     
-    def check(self):
+    def check(self, player):
+        number = 0
+        for i in range(len(self.table)):
+            for j in range(len(self.table[i])):
+                if self.table[i][j] == 0:
+                    number += 1
+                    zero = [i,j]
+        
+        if number == 1:
+            self.table[zero[0]][zero[1]] = player
+
         win = [0 for i in range(8)]
         for i in range(3):
             if 1 in self.table[i] and 2 in self.table[i]:
