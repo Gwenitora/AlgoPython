@@ -22,7 +22,6 @@ class Grille :
     #definir une fonction afficher de parametre self 
     def afficher(self, player):
         pygame.draw.rect(self.ecran, (0,0,0), ((0, 0), (600, 100)))
-        pygame.display.set_caption('Show Text')
         text = pygame.font.Font('freesansbold.ttf', 32).render('Turn to the player: ' + player.replace("1", "X").replace("2", "O"), True, (255, 255, 255))
         textRect = text.get_rect()
         textRect.center = (300, 50)
