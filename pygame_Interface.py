@@ -17,7 +17,7 @@ class Grille :
             ((0,300),(600,300)),
             ((0,500),(600,500))
             ]
-    
+
         
     #definir une fonction afficher de parametre self 
     def afficher(self, player):
@@ -62,6 +62,7 @@ class Jeu :
                 #si le type d'evenement est equivalent a pygame.QUIT / si le joueur clique sur la croix
                 if event.type == pygame.MOUSEBUTTONUP and (event.pos[1]-100) // 200>=0:  # or MOUSEBUTTONDOWN depending on what you want.
                     print(str(event.pos[0] // 200) + ", " +  str((event.pos[1]-100) // 200))
+                    
                 elif event.type == pygame.QUIT:
                     #alors sortir du sys / fermer la fenetre 
                     sys.exit()
