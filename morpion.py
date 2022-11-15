@@ -10,17 +10,20 @@ def play():
 
 def parameter():
     bot = (question("Do you want to play with a bot ?", ["Yes","No"], 1) - 1) * -1
+    pygame = (question("Do you want to play with pygame ?", ["Yes","No"]) - 1) * -1
     bot = (bot == 1)
-    return bot
+    pygame = (pygame == 1)
+    return bot, pygame
 
 def gameplay(parameters):
-    Plateau = Table(parameters)
+    bot = parameters[0]
+    pygame = parameters[1]
+    Plateau = Table(bot, pygame)
     player = randint(1,2)
     playerStr = str(player).replace("1", "X").replace("2", "O")
     table = Plateau.printTable("Turn to player: " + playerStr)
     while True:
         cls()
-        print(table)
         Plateau.modify(player)
         player %= 2
         player += 1
@@ -30,19 +33,49 @@ def gameplay(parameters):
         if check == -1:
             Plateau.printTable()
             question((table + ' ')[18:-1] + "\n\nEquality", "empty")
+            Plateau.quit()
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
         elif check != 0:
             Plateau.printTable()
             question((table + ' ')[18:-1] + "\n\nPlayer " + str(check) + " Win", "empty")
+            Plateau.quit()
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
 
 class Table:
-    def __init__(self, bot, key = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]):
+    def __init__(self, bot, pygame, key = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]):
         self.table = [[0 for i in range(3)] for j in range(3)]
         self.bot = bot
         self.key = key
+        self.pygame = pygame
+        if pygame:
+            init()
+            self.ecran = display.set_mode((600,700))
+            display.set_caption('Morpion pas dans le calfrock mon copain' )
+            self.lignes = [
+                ((200,100),(200,700)),
+                ((400,100),(400,700)),
+                ((0,300),(600,300)),
+                ((0,500),(600,500))
+            ]
     
     def printTable(self, message = ''):
+        if self.pygame:
+            self.printPygame(message)
+        else:
+            self.printConsole(message)
+    
+    def printPygame(self, message = ''):
+        self.ecran.fill((150,150,150))
+        draw.rect(self.ecran, (0,0,0), ((0, 0), (600, 100)))
+        text = font.Font('freesansbold.ttf', 50).render(message, True, (255, 255, 255))
+        textRect = text.get_rect()
+        textRect.center = (300, 50)
+        self.ecran.blit(text, textRect)
+        for ligne in self.lignes :
+            draw.line(self.ecran, (0,0,0), ligne[0], ligne[1], 10)
+        display.update()
+
+    def printConsole(self, message = ''):
         text = ''
         for i in range(len(self.table)):
             k = ""
@@ -50,7 +83,7 @@ class Table:
                 k += " " + str(j).replace("1", "X").replace("2", "O").replace("0", " ") + " |"
             text += k[0:-1]
             if i != 2: text += "\n---+---+---\n"
-        return message + "\n" + text
+        print(message + "\n" + text)
     
     def modify(self, player):
         if self.bot and player == 2:
@@ -58,12 +91,23 @@ class Table:
             self.table[coord[0]][coord[1]] = player
             return
         while True:
-            myKey = read_key()
-            for i in range(len(self.key)):
-                for j in range(len(self.key[1])):
-                    if myKey == self.key[i][j] and self.table[i][j] == 0:
-                        self.table[i][j] = player
-                        return
+            if self.pygame:
+                for even in event.get():
+                    if even.type == MOUSEBUTTONUP and (even.pos[1]-100) // 200>=0:
+                        x, y = even.pos[0] // 200, (even.pos[1]-100) // 200
+                        if self.table[x][y] == 0:
+                            self.table[x][y] = player
+                            print(str(x) + ',' + str(y))
+                            return
+                    elif even.type == QUIT: 
+                        exit()
+            else:
+                myKey = read_key()
+                for i in range(len(self.key)):
+                    for j in range(len(self.key[1])):
+                        if myKey == self.key[i][j] and self.table[i][j] == 0:
+                            self.table[i][j] = player
+                            return
     
     def check(self):
         win = [0 for i in range(8)]

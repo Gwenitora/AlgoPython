@@ -3,6 +3,8 @@ from random import *
 from keyboard import *
 from time import *
 from os import *
+from pygame import *
+from sys import *
 
 
 def question(questi, answers, default=""):
