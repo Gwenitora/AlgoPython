@@ -11,18 +11,27 @@ class Grille :
         self.ecran = ecran
         
         # initialiser self.ligne egale a une liste [( (200,0),(200,600)),((400,0),(400,600)),((0,200),(600,200)),((0,400),(600,400)),]
-        self.lignes = [( (200,0),(200,600)),
-                       ((400,0),(400,600)),
-                       ((0,200),(600,200)),
-                       ((0,400),(600,400)),]
+        self.lignes = [
+            ((200,100),(200,700)),
+            ((400,100),(400,700)),
+            ((0,300),(600,300)),
+            ((0,500),(600,500))
+            ]
     
         
     #definir une fonction afficher de parametre self 
-    def afficher(self):
+    def afficher(self, player):
+        pygame.draw.rect(self.ecran, (0,0,0), ((0, 0), (600, 100)))
+        pygame.display.set_caption('Show Text')
+        text = pygame.font.Font('freesansbold.ttf', 32).render('Turn to the player: ' + player.replace("1", "X").replace("2", "O"), True, (255, 255, 255))
+        textRect = text.get_rect()
+        textRect.center = (300, 50)
+        self.ecran.blit(text, textRect)
         #pour toute les ligne dans l'argument self.ligne 
         for ligne in self.lignes : 
             #dessiner en noir les argument d'index 0 et 1 d'epaisseur 10 
-            pygame.draw.line(self.ecran,(0,0,0),ligne[0],ligne[1],10)
+            pygame.draw.line(self.ecran, (0,0,0), ligne[0], ligne[1], 10)
+        pygame.display.update()
             
             
             
@@ -32,7 +41,7 @@ class Jeu :
     def __init__(self) :
         
         #Ouvrir une fenetre de 600 par 600 
-        self.ecran = pygame.display.set_mode((600,600))
+        self.ecran = pygame.display.set_mode((600,700))
         
         #donner un titre a la fenetre 
         pygame.display.set_caption('Morpion pas dans le calfrock mon copain' )
@@ -46,7 +55,7 @@ class Jeu :
         
         
     #definir fonction_principal de parametre self :   
-    def fonction_principale(self):
+    def fonction_principale(self, player):
         #tant que self.jeu_encours
         while self.jeu_encours:
             #pour tout les evenement se trouvant dans pygame
@@ -59,7 +68,7 @@ class Jeu :
             self.ecran.fill((150,150,150))
             
             #rappeler la fonction self.grille.afficher / afficher les grille 
-            self.grille.afficher()
+            self.grille.afficher(player)
             
             #rafraichissement de l'ecran 
             pygame.display.flip()
@@ -72,6 +81,6 @@ if __name__ == '__main__':
     #Alors appeler la fonction init  
     pygame.init()
     #Alors appeler la fonction fonction_principale se trouvant dans la class jeu 
-    Jeu().fonction_principale()
+    Jeu().fonction_principale('2')
     #Alors appeler la fonction quit
     pygame.quit( )
