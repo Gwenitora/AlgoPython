@@ -23,7 +23,7 @@ def gameplay(parameters):
     playerStr = str(player).replace("1", "X").replace("2", "O")
     table = Plateau.printTable("Turn to player: " + playerStr)
     while True:
-        cls()
+        # cls()
         Plateau.modify(player)
         player %= 2
         player += 1
@@ -31,14 +31,12 @@ def gameplay(parameters):
         check = Plateau.check()
         table = Plateau.printTable("Turn to player: " + playerStr)
         if check == -1:
-            Plateau.printTable()
-            question((table + ' ')[18:-1] + "\n\nEquality", "empty")
-            Plateau.quit()
+            Plateau.printTable("Equality")
+            Plateau.quitPygame()
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
         elif check != 0:
-            Plateau.printTable()
-            question((table + ' ')[18:-1] + "\n\nPlayer " + str(check) + " Win", "empty")
-            Plateau.quit()
+            Plateau.printTable("Player " + str(check) + " Win")
+            Plateau.quitPygame()
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
 
 class Table:
@@ -73,6 +71,15 @@ class Table:
         self.ecran.blit(text, textRect)
         for ligne in self.lignes :
             draw.line(self.ecran, (0,0,0), ligne[0], ligne[1], 10)
+        for i in range(len(self.table)):
+            for j in range(len(self.table[i])):
+                x = i * 200
+                y = j * 200 + 100
+                if self.table[i][j] == 1:
+                    draw.line(self.ecran, (255, 0, 0), (x+20,y+180), (x+180,y+20), 15)
+                    draw.line(self.ecran, (255, 0, 0), (x+20,y+20), (x+180,y+180), 15)
+                elif self.table[i][j] == 2:
+                    draw.ellipse(self.ecran, (0, 0, 255), (x+20, y+20, 160, 160), 10)
         display.update()
 
     def printConsole(self, message = ''):
@@ -97,7 +104,6 @@ class Table:
                         x, y = even.pos[0] // 200, (even.pos[1]-100) // 200
                         if self.table[x][y] == 0:
                             self.table[x][y] = player
-                            print(str(x) + ',' + str(y))
                             return
                     elif even.type == QUIT: 
                         exit()
@@ -144,23 +150,34 @@ class Table:
         return 0
 
     def dangerCase(self):
-        for i in range(3):
-            if self.table[i].count(1) >= 2:
-                for j in range(3):
-                    if self.table[i][j] == 0:
-                        return i,j
-        for i in range(3):
-            if [self.table[j][i] for j in range(3)].count(1) >= 2:
-                for j in range(3):
-                    if self.table[j][i] == 0:
-                        return j,i
-        for i in range(2):
-            if [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)].count(1) >= 2:
-                for j in range(3):
-                    if self.table[j][(2 - j) * i - j * (i - 1)] == 0:
-                        return j,(2 - j) * i - j * (i - 1)
+        for j in [2,1]:
+            for i in range(3):
+                if self.table[i].count(j) >= 2:
+                    for j in range(3):
+                        if self.table[i][j] == 0:
+                            return i,j
+            for i in range(3):
+                if [self.table[j][i] for j in range(3)].count(j) >= 2:
+                    for j in range(3):
+                        if self.table[j][i] == 0:
+                            return j,i
+            for i in range(2):
+                if [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)].count(j) >= 2:
+                    for j in range(3):
+                        if self.table[j][(2 - j) * i - j * (i - 1)] == 0:
+                            return j,(2 - j) * i - j * (i - 1)
 
         i,j = randint(0,2),randint(0,2)
         while not self.table[i][j] == 0:
             i,j = randint(0,2),randint(0,2)
         return i,j
+    
+    def quitPygame(self):
+        if self.pygame:
+            while True:
+                for even in event.get():
+                    if even.type == MOUSEBUTTONUP:
+                        quit()
+                        return
+                    elif even.type == QUIT: 
+                        exit()
