@@ -60,8 +60,8 @@ class Jeu :
             #pour tout les evenement se trouvant dans pygame
             for event in pygame.event.get():
                 #si le type d'evenement est equivalent a pygame.QUIT / si le joueur clique sur la croix
-                if event.type == pygame.MOUSEBUTTONUP:  # or MOUSEBUTTONDOWN depending on what you want.
-                    print(str(event.pos[0] // 200) + ", " +  str(event.pos[1] // 200))
+                if event.type == pygame.MOUSEBUTTONUP and (event.pos[1]-100) // 200>=0:  # or MOUSEBUTTONDOWN depending on what you want.
+                    print(str(event.pos[0] // 200) + ", " +  str((event.pos[1]-100) // 200))
                 elif event.type == pygame.QUIT:
                     #alors sortir du sys / fermer la fenetre 
                     sys.exit()
