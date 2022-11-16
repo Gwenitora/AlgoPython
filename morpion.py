@@ -41,8 +41,8 @@ def gameplay(parameters):
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
 
 class Table:
-    table = [[0 for i in range(3)] for j in range(3)]
-    def __init__(self, bot = False, pygame = False, key = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]):
+    def __init__(self, bot, pygame, key = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]):
+        self.table = [[0 for i in range(3)] for j in range(3)]
         self.bot = bot
         self.key = key
         self.pygame = pygame
