@@ -1,6 +1,7 @@
 from library import *
 
 def play():
+
     playing = 1
     while playing == 1:
         parameters = parameter()
@@ -127,48 +128,43 @@ class Table:
                             self.table[i][j] = player
                             return
     
-    def check(self, player, Plato = None):
-        if Plato == None:
-            Plateau = self.table
-        else:
-            Plateau = Plato
-
+    def check(self, player):
         number = 0
-        for i in range(len(Plateau)):
-            for j in range(len(Plateau[i])):
-                if Plateau[i][j] == 0:
+        for i in range(len(self.table)):
+            for j in range(len(self.table[i])):
+                if self.table[i][j] == 0:
                     number += 1
                     zero = [i,j]
         
         if number == 1:
-            Plateau[zero[0]][zero[1]] = player
+            self.table[zero[0]][zero[1]] = player
 
         win = [0 for i in range(8)]
         for i in range(3):
-            if 1 in Plateau[i] and 2 in Plateau[i]:
+            if 1 in self.table[i] and 2 in self.table[i]:
                 win[i] = -1
-            elif 0 in Plateau[i]:
+            elif 0 in self.table[i]:
                 pass
             else:
-                win[i] = Plateau[i][0]
+                win[i] = self.table[i][0]
                 self.connection = i
         
         for i in range(3):
-            if 1 in [Plateau[j][i] for j in range(3)] and 2 in [Plateau[j][i] for j in range(3)]:
+            if 1 in [self.table[j][i] for j in range(3)] and 2 in [self.table[j][i] for j in range(3)]:
                 win[i + 3] = -1
-            elif 0 in [Plateau[j][i] for j in range(3)]:
+            elif 0 in [self.table[j][i] for j in range(3)]:
                 pass
             else:
-                win[i + 3] = Plateau[0][i]
+                win[i + 3] = self.table[0][i]
                 self.connection = i + 3
         
         for i in range(2):
-            if 1 in [Plateau[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [Plateau[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
+            if 1 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
                 win[i + 6] = -1
-            elif 0 in [Plateau[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
+            elif 0 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
                 pass
             else:
-                win[i + 6] = Plateau[0][i * 2]
+                win[i + 6] = self.table[0][i * 2]
                 self.connection = i + 6
         
         if 1 in win:
@@ -196,9 +192,9 @@ class Table:
                     for j in range(3):
                         if self.table[j][(2 - j) * i - j * (i - 1)] == 0:
                             return j,(2 - j) * i - j * (i - 1)
-        
-        coor = testBot(self.table)
-        i, j = coor[0], coor[1]
+        i,j = randint(0,2),randint(0,2)
+        while not self.table[i][j] == 0:
+            i,j = randint(0,2),randint(0,2)
         return i,j
     
     def quitPygame(self):
@@ -210,39 +206,3 @@ class Table:
                         return
                     elif even.type == QUIT: 
                         exit()
-
-
-def testBot(Plateau, Players = None):
-    if Players == None:
-        Player = 2
-    else:
-        Player = Players
-    
-    proba = [[0 for j in range(3)] for i in range(3)]
-
-    for i in range(3):
-        for j in range(3):
-            if Plateau[i][j] == 0:
-                tempPlateau = Plateau
-                tempPlateau[i][j] = Player
-                check = Table().check((Player % 2)+1, tempPlateau)
-                if check == 0:
-                    proba[i][j] = testBot(tempPlateau, (Player % 2)+1)
-                elif check == -1 or check == 2:
-                    proba[i][j] = 1
-                elif check == 1:
-                    proba[i][j] = 0
-    
-    if Players == None:
-        better = []
-        betterStat = 0
-        for i in range(3):
-            for j in range(3):
-                if proba[i][j] > betterStat:
-                    better = [[i, j]]
-                    betterStat = proba[i][j]
-                elif proba[i][j] == betterStat:
-                    better.append([i, j])
-        return choice(better)
-    else:
-        return sum([sum(proba[i]) for i in range(len(proba))]) / 9
