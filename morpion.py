@@ -41,8 +41,8 @@ def gameplay(parameters):
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
 
 class Table:
-    def __init__(self, bot, pygame, key = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]):
-        self.table = [[0 for i in range(3)] for j in range(3)]
+    table = [[0 for i in range(3)] for j in range(3)]
+    def __init__(self, bot = False, pygame = False, key = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]):
         self.bot = bot
         self.key = key
         self.pygame = pygame
@@ -141,27 +141,27 @@ class Table:
 
         win = [0 for i in range(8)]
         for i in range(3):
-            if 1 in self.table[i] and 2 in self.table[i]:
+            if 1 in Plateau[i] and 2 in Plateau[i]:
                 win[i] = -1
-            elif 0 in self.table[i]:
+            elif 0 in Plateau[i]:
                 pass
             else:
                 win[i] = self.table[i][0]
                 self.connection = i
         
         for i in range(3):
-            if 1 in [self.table[j][i] for j in range(3)] and 2 in [self.table[j][i] for j in range(3)]:
+            if 1 in [Plateau[j][i] for j in range(3)] and 2 in [Plateau[j][i] for j in range(3)]:
                 win[i + 3] = -1
-            elif 0 in [self.table[j][i] for j in range(3)]:
+            elif 0 in [Plateau[j][i] for j in range(3)]:
                 pass
             else:
                 win[i + 3] = self.table[0][i]
                 self.connection = i + 3
         
         for i in range(2):
-            if 1 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
+            if 1 in [Plateau[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [Plateau[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
                 win[i + 6] = -1
-            elif 0 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
+            elif 0 in [Plateau[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
                 pass
             else:
                 win[i + 6] = self.table[0][i * 2]
@@ -192,7 +192,6 @@ class Table:
                     for j in range(3):
                         if self.table[j][(2 - j) * i - j * (i - 1)] == 0:
                             return j,(2 - j) * i - j * (i - 1)
-
         i,j = randint(0,2),randint(0,2)
         while not self.table[i][j] == 0:
             i,j = randint(0,2),randint(0,2)

@@ -2,6 +2,8 @@ from math import *
 from random import *
 from keyboard import *
 from time import *
+from pygame import *
+from sys import *
 from os import *
 from pygame import *
 from sys import *
