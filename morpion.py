@@ -1,7 +1,7 @@
 from library import *
 
 def play():
-    
+
     playing = 1
     while playing == 1:
         parameters = parameter()
@@ -141,27 +141,27 @@ class Table:
 
         win = [0 for i in range(8)]
         for i in range(3):
-            if 1 in Plateau[i] and 2 in Plateau[i]:
+            if 1 in self.table[i] and 2 in self.table[i]:
                 win[i] = -1
-            elif 0 in Plateau[i]:
+            elif 0 in self.table[i]:
                 pass
             else:
                 win[i] = self.table[i][0]
                 self.connection = i
         
         for i in range(3):
-            if 1 in [Plateau[j][i] for j in range(3)] and 2 in [Plateau[j][i] for j in range(3)]:
+            if 1 in [self.table[j][i] for j in range(3)] and 2 in [self.table[j][i] for j in range(3)]:
                 win[i + 3] = -1
-            elif 0 in [Plateau[j][i] for j in range(3)]:
+            elif 0 in [self.table[j][i] for j in range(3)]:
                 pass
             else:
                 win[i + 3] = self.table[0][i]
                 self.connection = i + 3
         
         for i in range(2):
-            if 1 in [Plateau[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [Plateau[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
+            if 1 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
                 win[i + 6] = -1
-            elif 0 in [Plateau[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
+            elif 0 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
                 pass
             else:
                 win[i + 6] = self.table[0][i * 2]
