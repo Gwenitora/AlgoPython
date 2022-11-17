@@ -128,43 +128,47 @@ class Table:
                             self.table[i][j] = player
                             return
     
-    def check(self, player):
+    def check(self, player, Table = True):
+
+        if Table == True:
+            Table = self.table
+
         number = 0
-        for i in range(len(self.table)):
-            for j in range(len(self.table[i])):
-                if self.table[i][j] == 0:
+        for i in range(len(Table)):
+            for j in range(len(Table[i])):
+                if Table[i][j] == 0:
                     number += 1
                     zero = [i,j]
         
         if number == 1:
-            self.table[zero[0]][zero[1]] = player
+            Table[zero[0]][zero[1]] = player
 
         win = [0 for i in range(8)]
         for i in range(3):
-            if 1 in self.table[i] and 2 in self.table[i]:
+            if 1 in Table[i] and 2 in Table[i]:
                 win[i] = -1
-            elif 0 in self.table[i]:
+            elif 0 in Table[i]:
                 pass
             else:
-                win[i] = self.table[i][0]
+                win[i] = Table[i][0]
                 self.connection = i
         
         for i in range(3):
-            if 1 in [self.table[j][i] for j in range(3)] and 2 in [self.table[j][i] for j in range(3)]:
+            if 1 in [Table[j][i] for j in range(3)] and 2 in [Table[j][i] for j in range(3)]:
                 win[i + 3] = -1
-            elif 0 in [self.table[j][i] for j in range(3)]:
+            elif 0 in [Table[j][i] for j in range(3)]:
                 pass
             else:
-                win[i + 3] = self.table[0][i]
+                win[i + 3] = Table[0][i]
                 self.connection = i + 3
         
         for i in range(2):
-            if 1 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
+            if 1 in [Table[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [Table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
                 win[i + 6] = -1
-            elif 0 in [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
+            elif 0 in [Table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
                 pass
             else:
-                win[i + 6] = self.table[0][i * 2]
+                win[i + 6] = Table[0][i * 2]
                 self.connection = i + 6
         
         if 1 in win:
