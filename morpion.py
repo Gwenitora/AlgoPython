@@ -187,10 +187,12 @@ class Table:
         return 0
 
     def dangerCase(self):
-        
+        if self.table == [[0,0,0],[0,0,0],[0,0,0]]:
+            return randint(0,1) * 2, randint(0,1) * 2
+
         eval = self.minimax(deepcopy(self.table), 2)
         i, j = eval[1], eval[2]
-        print("Evaluation: " + str(eval[0]))
+        print("Evaluation: " + str(eval))
         
         return i,j
     
@@ -204,7 +206,7 @@ class Table:
                     elif even.type == QUIT: 
                         exit()
 
-    def minimax(self, Tableau, Player, alpha = float('-inf'), beta = float('inf')):
+    def minimax(self, Tableau, Player):
         Table = deepcopy(Tableau)
 
         check = self.check(Player, deepcopy(Table))
@@ -223,28 +225,22 @@ class Table:
                 Plate[i % 3][i // 3] = Player
 
                 if Player == 2:
-                    eval = self.minimax(Plate, 1, alpha, beta)
+                    eval = self.minimax(Plate, 1)
                     if eval[0] > maxeval:
                         val = []
                     maxeval = max(maxeval, eval[0])
                     if eval[0] == maxeval:
                         val.append([i % 3, i // 3])
-                    alpha = max(alpha, eval[0])
-                    if beta <= alpha:
-                        break
 
                 elif Player == 1:
-                    eval = self.minimax(Plate, 2, alpha, beta)
+                    eval = self.minimax(Plate, 2)
                     mineval = min(mineval, eval[0])
-                    beta = min(beta, eval[0])
-                    if alpha <= beta:
-                        break
         
         if Player == 2:
             val = choice(val)
             x, y = val[0], val[1]
-            return mineval, x, y
+            return maxeval, x, y
         elif Player == 1:
-            return [maxeval]
+            return [mineval]
 
 play()
