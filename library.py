@@ -7,6 +7,7 @@ from sys import *
 from os import *
 from pygame import *
 from sys import *
+from copy import *
 
 
 def question(questi, answers, default=""):

@@ -130,8 +130,10 @@ class Table:
     
     def check(self, player, Table = True):
 
+        Bool = False
         if Table == True:
-            Table = self.table
+            Table = deepcopy(self.table)
+            Bool = True
 
         number = 0
         for i in range(len(Table)):
@@ -142,6 +144,8 @@ class Table:
         
         if number == 1:
             Table[zero[0]][zero[1]] = player
+        
+        connect = -1
 
         win = [0 for i in range(8)]
         for i in range(3):
@@ -151,7 +155,7 @@ class Table:
                 pass
             else:
                 win[i] = Table[i][0]
-                self.connection = i
+                connect = i
         
         for i in range(3):
             if 1 in [Table[j][i] for j in range(3)] and 2 in [Table[j][i] for j in range(3)]:
@@ -160,7 +164,7 @@ class Table:
                 pass
             else:
                 win[i + 3] = Table[0][i]
-                self.connection = i + 3
+                connect = i + 3
         
         for i in range(2):
             if 1 in [Table[j][(2 - j) * i - j * (i - 1)] for j in range(3)] and 2 in [Table[j][(2 - j) * i - j * (i - 1)] for j in range(3)]:
@@ -169,8 +173,11 @@ class Table:
                 pass
             else:
                 win[i + 6] = Table[0][i * 2]
-                self.connection = i + 6
+                connect = i + 6
         
+        if Bool:
+            self.connection = connect
+
         if 1 in win:
             return 1
         if 2 in win:
@@ -180,25 +187,11 @@ class Table:
         return 0
 
     def dangerCase(self):
-        for k in [2,1]:
-            for i in range(3):
-                if self.table[i].count(k) >= 2:
-                    for j in range(3):
-                        if self.table[i][j] == 0:
-                            return i,j
-            for i in range(3):
-                if [self.table[j][i] for j in range(3)].count(k) >= 2:
-                    for j in range(3):
-                        if self.table[j][i] == 0:
-                            return j,i
-            for i in range(2):
-                if [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)].count(k) >= 2:
-                    for j in range(3):
-                        if self.table[j][(2 - j) * i - j * (i - 1)] == 0:
-                            return j,(2 - j) * i - j * (i - 1)
-        i,j = randint(0,2),randint(0,2)
-        while not self.table[i][j] == 0:
-            i,j = randint(0,2),randint(0,2)
+        
+        eval = self.minimax(deepcopy(self.table), 2)
+        i, j = eval[1], eval[2]
+        print("Evaluation: " + str(eval[0]))
+        
         return i,j
     
     def quitPygame(self):
@@ -210,3 +203,48 @@ class Table:
                         return
                     elif even.type == QUIT: 
                         exit()
+
+    def minimax(self, Tableau, Player, alpha = float('-inf'), beta = float('inf')):
+        Table = deepcopy(Tableau)
+
+        check = self.check(Player, deepcopy(Table))
+        if check == -1: check = 1.5
+        if check > 0:
+            print(str(Table) + ' : ' + str(check))
+            return [check]
+        
+        maxeval = float('-inf')
+        mineval = float('inf')
+        val = []
+        
+        for i in range(9):
+            if Table[i % 3][i // 3] == 0:
+                Plate = deepcopy(Table)
+                Plate[i % 3][i // 3] = Player
+
+                if Player == 2:
+                    eval = self.minimax(Plate, 1, alpha, beta)
+                    if eval[0] > maxeval:
+                        val = []
+                    maxeval = max(maxeval, eval[0])
+                    if eval[0] == maxeval:
+                        val.append([i % 3, i // 3])
+                    alpha = max(alpha, eval[0])
+                    if beta <= alpha:
+                        break
+
+                elif Player == 1:
+                    eval = self.minimax(Plate, 2, alpha, beta)
+                    mineval = min(mineval, eval[0])
+                    beta = min(beta, eval[0])
+                    if alpha <= beta:
+                        break
+        
+        if Player == 2:
+            val = choice(val)
+            x, y = val[0], val[1]
+            return mineval, x, y
+        elif Player == 1:
+            return [maxeval]
+
+play()
