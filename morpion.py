@@ -263,5 +263,3 @@ class Table:
             return maxeval, x, y
         elif Player == 1:
             return [mineval]
-
-play()
