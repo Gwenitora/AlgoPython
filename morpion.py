@@ -32,21 +32,20 @@ def gameplay(parameters):
         check = Plateau.check(player)
         Plateau.printTable("Turn to player: " + playerStr)
         if check == -1:
-            Plateau.printTable("Equality")
-            Plateau.quitPygame()
+            Plateau.printTable("Equality", True)
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
         elif check != 0:
-            Plateau.printTable("Player " + str(check).replace("1", "X").replace("2", "O") + " Win")
-            Plateau.quitPygame()
+            Plateau.printTable("Player " + str(check).replace("1", "X").replace("2", "O") + " Win", True)
             return question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
 
 class Table:
-    def __init__(self, bot, pygame, key = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]):
+    def __init__(self, bot, pygame, key = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]], keyPygame = [[K_KP7, K_KP8, K_KP9], [K_KP4, K_KP5, K_KP6], [K_KP1, K_KP2, K_KP3]]):
         self.table = [[0 for i in range(3)] for j in range(3)]
         self.bot = bot
         self.key = key
         self.pygame = pygame
         if pygame:
+            self.keyPygame = keyPygame
             init()
             self.ecran = display.set_mode((600,700))
             display.set_caption('Morpion pas dans le calfrock mon copain' )
@@ -59,11 +58,23 @@ class Table:
         self.connection = -1
         self.connections = [(100,200), (500,200), (100, 600), (500, 600)]
     
-    def printTable(self, message = ''):
+    def printTable(self, message = '', valid = False):
         if self.pygame:
             self.printPygame(message)
+            if valid:
+                while not(key.get_pressed()[K_RETURN] or key.get_pressed()[K_KP_ENTER]):
+                    for even in event.get():
+                        if even.type == MOUSEBUTTONUP:
+                            quit()
+                            return
+                        elif even.type == QUIT: 
+                            exit()
+                quit()
         else:
             self.printConsole(message)
+            if valid:
+                while not(is_pressed('enter')):
+                    pass
     
     def printPygame(self, message = ''):
         self.ecran.fill((240,240,240))
@@ -118,12 +129,17 @@ class Table:
                         if self.table[x][y] == 0:
                             self.table[x][y] = player
                             return
-                    elif even.type == QUIT: 
+                    elif even.type == QUIT:
                         exit()
+                for i in range(len(self.keyPygame)):
+                    for j in range(len(self.keyPygame[i])):
+                        if key.get_pressed()[self.keyPygame[j][i]] and self.table[i][j] == 0:
+                            self.table[i][j] = player
+                            return
             else:
                 myKey = read_key()
                 for i in range(len(self.key)):
-                    for j in range(len(self.key[1])):
+                    for j in range(len(self.key[i])):
                         if myKey == self.key[i][j] and self.table[i][j] == 0:
                             self.table[i][j] = player
                             return
@@ -209,19 +225,8 @@ class Table:
 
         eval = self.minimax(deepcopy(self.table), 2)
         i, j = eval[1], eval[2]
-        print("Evaluation: " + str(eval))
         
         return i,j
-    
-    def quitPygame(self):
-        if self.pygame:
-            while True:
-                for even in event.get():
-                    if even.type == MOUSEBUTTONUP:
-                        quit()
-                        return
-                    elif even.type == QUIT: 
-                        exit()
 
     def minimax(self, Tableau, Player):
         Table = deepcopy(Tableau)
@@ -229,7 +234,6 @@ class Table:
         check = self.check(Player, deepcopy(Table))
         if check == -1: check = 1.5
         if check > 0:
-            print(str(Table) + ' : ' + str(check))
             return [check]
         
         maxeval = float('-inf')

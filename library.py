@@ -5,8 +5,6 @@ from time import *
 from pygame import *
 from sys import *
 from os import *
-from pygame import *
-from sys import *
 from copy import *
 
 
