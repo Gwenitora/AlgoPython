@@ -187,6 +187,23 @@ class Table:
         return 0
 
     def dangerCase(self):
+        for k in [2,1]:
+            for i in range(3):
+                if self.table[i].count(k) >= 2:
+                    for j in range(3):
+                        if self.table[i][j] == 0:
+                            return i,j
+            for i in range(3):
+                if [self.table[j][i] for j in range(3)].count(k) >= 2:
+                    for j in range(3):
+                        if self.table[j][i] == 0:
+                            return j,i
+            for i in range(2):
+                if [self.table[j][(2 - j) * i - j * (i - 1)] for j in range(3)].count(k) >= 2:
+                    for j in range(3):
+                        if self.table[j][(2 - j) * i - j * (i - 1)] == 0:
+                            return j,(2 - j) * i - j * (i - 1)
+        
         if self.table == [[0,0,0],[0,0,0],[0,0,0]]:
             return randint(0,1) * 2, randint(0,1) * 2
 
