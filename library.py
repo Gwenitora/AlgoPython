@@ -71,4 +71,19 @@ def question(questi, answers, default=""):
                 input()
                 return pos
 
+def printList(array:list, crochet:bool = True, prlnt:bool = True) -> str:
+    string = '[ |'
+    for i in array:
+        if isinstance(i, list):
+            string += ', ' + printList(i, crochet, False)
+        else:
+            string += ', ' + str(i)
+    string += ' ]'
+    string = string.replace('|, ', '').replace('|', '')
+    if not crochet:
+        string = string.replace('[ ', '').replace(' ]', '')
+    if prlnt:
+        print(string)
+    return string
+
 def cls(): system('cls')
