@@ -10,35 +10,41 @@ def play():
             playing = question("Play again ?", ["Yes", "Yes, but with other parameters", "No, back to the menu"])
 
 def parameter():
-    return question('Numbers of paquets (8 by default):', 'input int', 8)
+    paquets = question('Numbers of paquets (8 by default):', 'input int', 8)
+    return paquets, 
 
 def gameplay(parameters):
-    cards = Card(parameters)
+    cards = Card(parameters[0])
 
-    playerPoint = []
-    playerCards = []
-    for i in range(2):
-        draw = cards.draw()
-        playerPoint.append(draw[0])
-        playerCards.append(draw[1])
-    dealerPoint = []
-    dealerCards = []
-    for i in range(2):
-        draw = cards.draw()
-        dealerPoint.append(draw[0])
-        dealerCards.append(draw[1])
-    while True:
+    while len(cards.players) > 0:
+        cards.update()
         reply = ['hit', 'stand', 'double']
-        if len(playerCards)==2 and playerPoint[0]==playerPoint[1]:
+        if len(cards.playerCards)==2 and (cards.playerPoint[0]==cards.playerPoint[1] or (cards.playerPoint[0] == 1 and cards.playerPoint[1] == 11) or (cards.playerPoint[0] == 11 and cards.playerPoint[1] == 1)):
             reply.append('split')
-        play = question('Your cards\n    ' + printList(playerCards, False, False) + '\n\n' + 'Dealer cards\n    ' + printList(dealerCards[:-1], False, False) + ', hide\n\n' + 'Your points: ' + str(sum(playerPoint)) + '\n' + 'Dealer points: ' + str(dealerPoint[0]) + '\n', reply)
+        if len(cards.players) > 1:
+            reply.append('swap')
+        play = question('Your cards\n    ' + printList(cards.playerCards, False, False) + '\n\nDealer cards\n    ' + printList(cards.dealerCards[:-1], False, False) + ', hide\n\nYour points: ' + str(sum(cards.playerPoint)) + '\nDealer points: ' + str(cards.dealerPoint[0]) + '\n', reply)
         if play==0:
-            draw = cards.draw()
-            playerPoint.append(draw[0])
-            playerCards.append(draw[1])
+            cards.hit()
         elif play==1:
-            break
-    question('', 'empty noClear')
+            cards.stand()
+        elif play==2:
+            cards.double()
+        elif play==3:
+            cards.split()
+        else:
+            cards.swap()
+    
+
+    while sum(cards.dealerPoint) < 18:
+        draw = cards.draw()
+        cards.dealerPoint.append(draw[0])
+        cards.dealerCards.append(draw[1])
+        if sum(cards.dealerPoint) > 21:
+            dealerPointReplace = replaceList(cards.dealerPoint, 11, 1)
+            if not dealerPointReplace == False:
+                cards.dealerPoint = dealerPointReplace
+    question('Your cards\n    ' + printList(cards.playerCards, False, False) + '\n\nDealer cards\n    ' + printList(cards.dealerCards, False, False) + '\n\nYour points: ' + str(sum(cards.playerPoint)) + '\nDealer points: ' + str(sum(cards.dealerPoint)) + '\n', 'empty')
 
 class Card:
     def __init__(self, numbers:int = 8) -> None:
@@ -57,6 +63,22 @@ class Card:
                         number = 10
                         text = special[i%11]
                     self.cards.append([number, text + j])
+        
+        self.playerPoint = []
+        self.playerCards = []
+        for i in range(2):
+            draw = self.draw()
+            self.playerPoint.append(draw[0])
+            self.playerCards.append(draw[1])
+        self.dealerPoint = []
+        self.dealerCards = []
+        for i in range(2):
+            draw = self.draw()
+            self.dealerPoint.append(draw[0])
+            self.dealerCards.append(draw[1])
+        self.players = [[]]
+        self.standPlayer = []
+        self.update()
 
     def draw(self) -> list:
         if self.cards == []:
@@ -64,5 +86,48 @@ class Card:
         choose = choice(self.cards)
         self.cards.remove(choose)
         return choose
+    
+    def swap(self):
+        self.update()
+        temp = self.players[0]
+        del self.players[0]
+        self.players.append(temp)
+        self.playerPoint, self.playerCards = self.players[0][0], self.players[0][1]
+    
+    def hit(self):
+        draw = self.draw()
+        self.playerPoint.append(draw[0])
+        self.playerCards.append(draw[1])
+        if sum(self.playerPoint) > 21:
+            self.playerPointReplace = replaceList(self.playerPoint, 11, 1)
+            if self.playerPointReplace == False:
+                self.stand()
+            else:
+                self.playerPoint = self.playerPointReplace
+    
+    def stand(self):
+        self.standPlayer.append(self.players[0])
+        del self.players[0]
+    
+    def double(self):
+        draw = self.draw()
+        self.playerPoint.append(draw[0])
+        self.playerCards.append(draw[1])
+        if sum(self.playerPoint) > 21:
+            self.playerPointReplace = replaceList(self.playerPoint, 11, 1)
+            if not self.playerPointReplace == False:
+                self.playerPoint = self.playerPointReplace
+        self.stand()
+    
+    def split(self):
+        draw = self.draw()
+        self.players.append([[self.playerPoint[1], draw[0]], [self.playerCards[1], draw[1]]])
+        draw = self.draw()
+        self.playerPoint[1] = draw[0]
+        self.playerCards[1] = draw[1]
+        self.update()
+    
+    def update(self):
+        self.players[0] = [self.playerPoint, self.playerCards]
 
 play()

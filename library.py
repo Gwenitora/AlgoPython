@@ -86,4 +86,11 @@ def printList(array:list, crochet:bool = True, prlnt:bool = True) -> str:
         print(string)
     return string
 
+def replaceList(list:list, element1:any, element2:any) -> list:
+    for i in range(len(list)):
+        if list[i] == element1:
+            list[i] = element2
+            return list
+    return False
+
 def cls(): system('cls')
